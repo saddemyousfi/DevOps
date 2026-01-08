@@ -43,17 +43,14 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "CI Test Report – ${{ github.repository }}"
-          to: ${{ secrets.EMAIL_TO }}
+          to: ${{ secrets.SMTP_USERNAME }}
+          cc: chokri.gammoudi@gmail.com
           from: "CI Bot <${{ secrets.SMTP_USERNAME }}>"
           body: |
             Hello,
-
+      
             Please find the attached test report.
-
-            Repository: ${{ github.repository }}
-            Workflow: ${{ github.workflow }}
+      
             Status: ${{ job.status }}
-
-            Run URL:
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           attachments: reports/report.html
+
