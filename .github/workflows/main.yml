@@ -38,3 +38,20 @@ jobs:
         with:
           name: pytest-html-report
           path: reports/test-report.html
+
+      - name: Send test report by email
+        uses: dawidd6/action-send-mail@v3
+        with: 
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "CI Test Report – ${{ github.repository }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: "CI Bot <ci@example.com>"
+          body: |
+            Hello,
+            Please find the attached test report from the latest pipeline run.
+
+          Status: ${{ job.status }}
+          attachments: reports/test-report.html
